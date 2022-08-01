@@ -29,6 +29,7 @@ gem "jbuilder"
 gem 'fast_jsonapi'
 gem "pry"
 gem 'webpacker'
+gem 'httparty'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

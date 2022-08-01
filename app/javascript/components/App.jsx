@@ -3,11 +3,16 @@ import { Route, Routes} from 'react-router-dom'
 import Airlines from './Airlines/Airlines'
 import Airline from './Airline/Airline'
 import Home from "./Home/Home";
+import Beer from "./beers/Beer";
+import Id_search from "./beers/Id_search";
+
 
 const App = () => {
   return (
     <>
-    <Home/>
+    {/* <Home/> */}
+    <Id_search />
+    <Beer/>
     {/* <Link to={"/airline"}>Airline</Link><br></br>
     <Link to={"/airlines"}>Airlines</Link> */}
 
