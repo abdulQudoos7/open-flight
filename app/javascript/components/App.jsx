@@ -4,14 +4,14 @@ import Airlines from './Airlines/Airlines'
 import Airline from './Airline/Airline'
 import Home from "./Home/Home";
 import Beer from "./beers/Beer";
-import Id_search from "./beers/Id_search";
+// import Date from "./beers/Test";
 
 
 const App = () => {
   return (
     <>
     {/* <Home/> */}
-    <Id_search />
+    {/* <Date/> */}
     <Beer/>
     {/* <Link to={"/airline"}>Airline</Link><br></br>
     <Link to={"/airlines"}>Airlines</Link> */}
