@@ -5,6 +5,7 @@ import Airline from './Airline/Airline'
 import Home from "./Home/Home";
 import Beer from "./beers/Beer";
 // import Date from "./beers/Test";
+import HooksPractise from "./Home/HooksPractise";
 
 
 const App = () => {
@@ -12,7 +13,8 @@ const App = () => {
     <>
     {/* <Home/> */}
     {/* <Date/> */}
-    <Beer/>
+      <Beer/>
+    {/*  <HooksPractise />*/}
     {/* <Link to={"/airline"}>Airline</Link><br></br>
     <Link to={"/airlines"}>Airlines</Link> */}
 
