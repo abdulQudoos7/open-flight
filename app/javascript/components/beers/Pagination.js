@@ -7,21 +7,18 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
 
   useEffect(() => {
     setNumberOfButtons(Math.ceil(total / showPerPage))
-    // console.log(`numberOfButtons => ${numberOfButtons}`)
-  }, [showPerPage,total])
+    console.log(`numberOfButtons => ${numberOfButtons}`)
+  }, [numberOfButtons, showPerPage,total])
 
+  // console.log(`yeah kya ha ${numberOfButtons}`)
 
   useEffect(() => {
     const value = showPerPage * counter;
     // console.log(" start Value ", value - showPerPage)
     // console.log(" end Value ", value)
     onPaginationChange(value - showPerPage, value)
-  }, [counter])
+  }, [counter, showPerPage])
 
-  useEffect(() => {
-    const value = showPerPage * counter;
-    onPaginationChange(value - showPerPage, value)
-  }, [showPerPage])
 
 
   const onButtonClick = (type) => {
@@ -55,14 +52,22 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
     <div>
       <div>
         <h2>{numberOfButtons} buttons </h2>
+        <h2>{showPerPage} howPerPage </h2>
         <h2>{total} Total </h2>
         <h2>{total/showPerPage} total / showPerPage </h2>
 
         <button onClick={() => onButtonClick("previous")} > Previous </button>
-        {showPerPage && new Array(numberOfButtons).fill("").map((el, index) => (
-          <a className='btnLinks' onClick={() => setCounter(index + 1)} key={`page-${index}`} > {index + 1} </a>
+        {
+            showPerPage && new Array(numberOfButtons).fill("").map((el, index) => (
+            <a className='btnLinks' onClick={() => setCounter(index + 1)} key={`page-${index}`} > {index + 1} </a>
+          ))
+        }
 
-        ))}
+        {/*{console.log(`show per page from pagination ${showPerPage}`) &&*/}
+        {/*    showPerPage && new Array(numberOfButtons).fill("").map((el, index) => (*/}
+        {/*  <a className='btnLinks' onClick={() => setCounter(index + 1)} key={`page-${index}`} > {index + 1} </a>*/}
+        {/*))}*/}
+
         <button onClick={() => onButtonClick("next")} > Next </button>
 
       </div>

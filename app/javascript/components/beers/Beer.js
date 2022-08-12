@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Pagination from './Pagination';
+import async from "async";
 
 
 
@@ -13,66 +14,48 @@ const Beer = () => {
   const [searchByYeast, setSearchByYeast] = useState("");
   const [searchByAbv, setSearchByAbv] = useState("");
 
+useEffect(()=>{
+  
+}[searchById])
+
+
+
+
   const [showPerPage, setShowPerPage] = useState(25)
   const [pagination, setPagination] = useState({
     start: 0,
     end: showPerPage,
   })
 
-  // useEffect(() => {
-  //   axios.get('/api/v1/beers')
-  //       .then(resp => {
-  //         setBeer(resp.data.beers)
-  //         // console.log(resp.data)
-  //         setSearchApiData(resp.data.beers)
-  //       })
-  // }, [])
-
-  useState(() => {
-    async function fetchData(){
-      const resp = await axios.get('/api/v1/beers')
-          .then(resp => {
-            setBeer(resp.data.beers)
-            setSearchApiData(resp.data.beers)
-            })
-    }
-    return fetchData();
-  })
-
-
+  useEffect(() => {
+    axios.get('/api/v1/beers')
+        .then(resp => {
+          setBeer(resp.data.beers)
+          // console.log(resp.data)
+          setSearchApiData(resp.data.beers)
+        })
+  }, [])
 
   const onPaginationChange = (start, end) => {
     setPagination({ start: start, end: end })
   };
 
-
-  // const pageDivider1 = (e) => {
-  //   if (e.target.value === "") {
-  //     setShowPerPage(25)
-  //   }
-  //   else {
-  //     const filterResult = e.target.value
-  //     setShowPerPage(filterResult)
-  //     console.log( "Pagination Per Page " + filterResult)
-  //     console.log(`length of spp ${filterResult.length}`)
-  //   }
-  //   setShowPerPage(e.target.value)
-  // }
-
   const pageDivider = (e) => {
     const filterResult = e.target.value
-    if (filterResult.length === 0 ){
-      setShowPerPage(1)
+
+    if (filterResult === "" || filterResult == 0 ){
+      setShowPerPage(25)
     }
-    // else if (filterResult.length === 0 ) {
-    //   setShowPerPage(1)
-    // }
     else {
       setShowPerPage(filterResult)
-      console.log( "Pagination Per Page " + filterResult)
-      console.log(`length of spp ${filterResult.length}`)
     }
   }
+
+  // const pageDivider = (e) => {
+  //   let filterResult = e.target.value
+  //   setShowPerPage(filterResult)
+  //   console.log(`incoming value is ${filterResult}`)
+  // }
 
 
 
@@ -159,7 +142,7 @@ const Beer = () => {
         {/* Search by Id */}
         <div>
           <label>Search By Id </label>
-          <input placeholder='Search By Id...' value={searchById} onInput={(e) => idSearch(e)} />
+          <input placeholder='Search By Id...' value={searchById} onChange={(e) => idSearch(e)} />
         </div>
         {/* Search by name */}
         <div>
@@ -217,7 +200,7 @@ const Beer = () => {
           <h2>{showPerPage} ya change kr k show kr rha hai</h2>
           <h2>{beer.length} beer ki length</h2>
           <label> Pagination Per Page </label>
-          <input placeholder='Pagination Per Page...' value={showPerPage} onInput={(e) => pageDivider(e)} />
+          <input placeholder='Pagination Per Page...' value={showPerPage === 25 ? "": showPerPage} onInput={(e) => pageDivider(e)} />
           {/* <button type='button' onClick={(e) => getDivider(e)} > Get Beers Per Page </button> */}
         </div>
         <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={beer.length} />
