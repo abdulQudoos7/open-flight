@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Pagination from './Pagination';
-import async from "async";
-
-
+import {DebounceInput} from "react-debounce-input";
+import genericFunction from "./GenericFunction";
+// import async from "async";
 
 const Beer = () => {
   const [beer, setBeer] = useState([]);
   const [searchApiData, setSearchApiData] = useState([]);
-  const [searchById, setSearchById] = useState("");
-  const [searchByName, setSearchByName] = useState("");
-  const [searchByFirstBrewed, setSearchByFirstBrewed] = useState("");
-  const [searchByYeast, setSearchByYeast] = useState("");
-  const [searchByAbv, setSearchByAbv] = useState("");
+  // search fields useStates
+  // const [searchById, setSearchById] = useState("");
+  // const [searchByName, setSearchByName] = useState("");
+  // const [searchByFirstBrewed, setSearchByFirstBrewed] = useState("");
+  // const [searchByYeast, setSearchByYeast] = useState("");
+  // const [searchByAbv, setSearchByAbv] = useState("");
+  const [search, setSearch] = useState(
+      {
+        id : "",
+        name : "",
+        first_brewed : "",
+        yeast : "",
+        abv : "",
+      }
+  )
 
-useEffect(()=>{
-  
-}[searchById])
-
-
-
-
+  //pagination UseStates
   const [showPerPage, setShowPerPage] = useState(25)
   const [pagination, setPagination] = useState({
     start: 0,
@@ -31,7 +35,6 @@ useEffect(()=>{
     axios.get('/api/v1/beers')
         .then(resp => {
           setBeer(resp.data.beers)
-          // console.log(resp.data)
           setSearchApiData(resp.data.beers)
         })
   }, [])
@@ -42,7 +45,6 @@ useEffect(()=>{
 
   const pageDivider = (e) => {
     const filterResult = e.target.value
-
     if (filterResult === "" || filterResult == 0 ){
       setShowPerPage(25)
     }
@@ -51,79 +53,127 @@ useEffect(()=>{
     }
   }
 
-  // const pageDivider = (e) => {
-  //   let filterResult = e.target.value
-  //   setShowPerPage(filterResult)
-  //   console.log(`incoming value is ${filterResult}`)
+  // Search By Id
+  // useEffect(()=>{
+  //   if (search.searchById == ""){
+  //     setBeer(searchApiData)
+  //   }else{
+  //     const filterResult = searchApiData.filter(beer => beer.id == search.searchById)
+  //     setBeer(filterResult)
+  //   }
+  // },[search.searchById])
+
+  // Search By Abv
+  // useEffect(()=>{
+  //   if (search.searchByAbv == ""){
+  //     setBeer(searchApiData)
+  //   }
+  //   else{
+  //     const filterResult = searchApiData.filter(beer => beer.abv >= search.searchByAbv)
+  //     setBeer(filterResult)
+  //   }
+  // },[search.searchByAbv])
+
+  // Search By generic function
+
+  const inputEvent = (event)=>{
+    const {value , name}= event.target;
+    setSearch({
+      ...search,
+      [name]: value,
+    })
+    if (name === undefined){
+      setBeer(searchApiData)
+    }else if (name === "yeast") {
+      const filterResult = searchApiData.filter(beer => beer.ingredients[`${name}`].toLowerCase().includes(value.toLowerCase()))
+      setBeer(filterResult)
+      console.log(filterResult)
+    }else{
+      const filterResult = searchApiData.filter(beer => beer[`${name}`].toLowerCase().includes(value.toLowerCase()))
+      setBeer(filterResult)
+      console.log(filterResult)
+    }
+  }
+
+
+  // const inputEvent = (event)=>{
+  //   const {value , name}= event.target;
+  //   setSearch((preValue) => {
+  //     console.log(preValue)
+  //     return{
+  //     ...search,
+  //     [name]: value,
+  //     }
+  //   })
+  //
+  //   if (name === undefined){
+  //     setBeer(searchApiData)
+  //   }else if (name === "yeast" && name === "name" && name === "first_brewed") {
+  //     const filterResult = searchApiData.filter(beer => beer.ingredients[`${name}`].toLowerCase().includes(value.toLowerCase()))
+  //     setBeer(filterResult)
+  //   }else if(name === "id"){
+  //     const filterResult = searchApiData.filter(beer => beer[`${name}`] == value)
+  //     setBeer(filterResult)
+  //   }else{
+  //     const filterResult = searchApiData.filter(beer => beer[`${name}`] >= value)
+  //     setBeer(filterResult)
+  //   }
+  //
+  //
   // }
 
 
 
-
-
-  //Search Fields code...
-
-  // Search By Id
-
-  const idSearch = (e) => {
-    if (e.target.value == "") {
+  const inputEvent1 = (event)=>{
+    const {value , name}= event.target;
+    setSearch({
+      ...search,
+      [name]: value,
+    })
+    if (name === undefined){
       setBeer(searchApiData)
-    } else {
-      const filterResult = searchApiData.filter(beer => beer.id == e.target.value)
+    }else if (name === "id") {
+      const filterResult = searchApiData.filter(beer => beer[`${name}`] == value)
       setBeer(filterResult)
+      console.log(filterResult)
+
+    }else{
+      const filterResult = searchApiData.filter(beer => beer[`${name}`] >= value)
+      setBeer(filterResult)
+      console.log(filterResult)
+
     }
-    setSearchById(e.target.value)
   }
 
   // Search By Name
-
-  const nameSearch = (e) => {
-    if (e.target.value == "") {
-      setBeer(searchApiData)
-    } else {
-      const filterResult = searchApiData.filter(beer => beer.name.toLowerCase().includes(e.target.value.toLowerCase()))
-      setBeer(filterResult)
-    }
-    setSearchByName(e.target.value)
-  }
+  // useEffect(()=>{
+  //   if (search.searchByName == ""){
+  //     setBeer(searchApiData)
+  //   }else{
+  //     const filterResult = searchApiData.filter(beer => beer.name.toLowerCase().includes(search.searchByName.toLowerCase()))
+  //     setBeer(filterResult)
+  //   }
+  // },[search.searchByName])
 
   // Search By FirstBrewed
-
-  const firstBrewedSearch = (e) => {
-    if (e.target.value == "") {
-      setBeer(searchApiData)
-    } else {
-      const filterResult = searchApiData.filter(beer => beer.first_brewed.includes(e.target.value))
-      setBeer(filterResult)
-    }
-    setSearchByFirstBrewed(e.target.value)
-  }
+  // useEffect(()=>{
+  //   if (search.searchByFirstBrewed == ""){
+  //     setBeer(searchApiData)
+  //   }else{
+  //     const filterResult = searchApiData.filter(beer => beer.first_brewed.toLowerCase().includes(search.searchByFirstBrewed.toLowerCase()))
+  //     setBeer(filterResult)    }
+  // },[search.searchByFirstBrewed])
 
   // Search By Yeast
-
-  const yeastSearch = (e) => {
-    if (e.target.value == "") {
-      setBeer(searchApiData)
-    } else {
-      const filterResult = searchApiData.filter(beer => beer.ingredients.yeast.toLowerCase().includes(e.target.value.toLowerCase()))
-      setBeer(filterResult)
-    }
-    setSearchByYeast(e.target.value)
-  }
-  // Search By Abv
-
-  const abvSearch = (e) => {
-    if (e.target.value == "") {
-      setBeer(searchApiData)
-    } else {
-      const filterResult = searchApiData.filter(beer => beer.abv >= e.target.value)
-      setBeer(filterResult)
-    }
-    setSearchByAbv(e.target.value)
-  }
-
-
-
+  // useEffect(()=>{
+  //     if (search.searchByYeast == ""){
+  //       setBeer(searchApiData)
+  //     }else{
+  //       const filterResult = searchApiData.filter(beer => beer.ingredients.yeast.toLowerCase().includes(search.searchByYeast.toLowerCase()))
+  //       setBeer(filterResult)
+  //     }
+  //
+  // },[search.searchByYeast])
 
   return (
     <><style>{`
@@ -139,30 +189,65 @@ useEffect(()=>{
         <div className="header">
           <h1>Beers</h1>
         </div>
-        {/* Search by Id */}
-        <div>
+      {/* Search by Id */}
+      <div>
           <label>Search By Id </label>
-          <input placeholder='Search By Id...' value={searchById} onChange={(e) => idSearch(e)} />
+          <DebounceInput
+              placeholder={"Search By Id..."}
+              value={search.id}
+              minLength={1}
+              debounceTimeout={800}
+              type="number"
+              name="id"
+              onChange={inputEvent1} />
         </div>
         {/* Search by name */}
         <div>
           <label>Search By Name </label>
-          <input placeholder='Search By Name...' value={searchByName} onInput={(e) => nameSearch(e)} />
+          <DebounceInput
+              placeholder={"Search By Name..."}
+              value={search.name}
+              minLength={1}
+              debounceTimeout={800}
+              type="text"
+              name="name"
+              onChange={inputEvent} />
         </div>
         {/* Search by FirstBrewed */}
         <div>
           <label>Search By First-Brewed </label>
-          <input placeholder='Search By First-Brewed...' value={searchByFirstBrewed} onInput={(e) => firstBrewedSearch(e)} />
+          <DebounceInput
+              placeholder={"Search By First-Brewed..."}
+              value={search.first_brewed}
+              minLength={1}
+              debounceTimeout={800}
+              type="text"
+              name="first_brewed"
+              onChange={inputEvent} />
         </div>
         {/* Search by Yeast */}
         <div>
           <label>Search By Yeast </label>
-          <input placeholder='Search By Yeast...' value={searchByYeast} onInput={(e) => yeastSearch(e)} />
+          <DebounceInput
+              placeholder={"Search By Yeast..."}
+              value={search.yeast}
+              minLength={1}
+              debounceTimeout={800}
+              type="text"
+              name="yeast"
+              onChange={inputEvent} />
         </div>
         {/* Search by Abv */}
         <div>
           <label>Search By Abv </label>
-          <input placeholder='Search By Abv...' value={searchByAbv} onInput={(e) => abvSearch(e)} />
+          <DebounceInput
+              placeholder={"Search By Abv..."}
+              value={search.abv}
+              minLength={1}
+              debounceTimeout={800}
+              type="text"
+              name="abv"
+              onChange={inputEvent1} />
         </div>
         <div className='grid'>
           <table>
@@ -197,11 +282,10 @@ useEffect(()=>{
       </div>
       <div>
         <div>
-          <h2>{showPerPage} ya change kr k show kr rha hai</h2>
-          <h2>{beer.length} beer ki length</h2>
+          <h2>Showing Result Per Page {showPerPage}</h2>
+          <h2>Total Number Of beers {beer.length}</h2>
           <label> Pagination Per Page </label>
           <input placeholder='Pagination Per Page...' value={showPerPage === 25 ? "": showPerPage} onInput={(e) => pageDivider(e)} />
-          {/* <button type='button' onClick={(e) => getDivider(e)} > Get Beers Per Page </button> */}
         </div>
         <Pagination showPerPage={showPerPage} onPaginationChange={onPaginationChange} total={beer.length} />
       </div>

@@ -7,7 +7,7 @@ const Pagination = ({ showPerPage, onPaginationChange, total }) => {
 
   useEffect(() => {
     setNumberOfButtons(Math.ceil(total / showPerPage))
-    console.log(`numberOfButtons => ${numberOfButtons}`)
+    // console.log(`numberOfButtons => ${numberOfButtons}`)
   }, [numberOfButtons, showPerPage,total])
 
   // console.log(`yeah kya ha ${numberOfButtons}`)
