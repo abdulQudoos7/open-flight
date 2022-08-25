@@ -6,7 +6,8 @@ import Home from "./Home/Home";
 import Beer from "./beers/Beer";
 // import Date from "./beers/Test";
 import HooksPractise from "./Home/HooksPractise";
-import BracketNotation from "./beers/BracketNotation";
+import Test from "./beers/Test";
+import SearchFilter from "./beers/SearchFilter";
 
 
 const App = () => {
@@ -15,7 +16,7 @@ const App = () => {
     {/* <Home/> */}
     {/* <Date/> */}
       <Beer/>
-      {/*<BracketNotation/>*/}
+    {/*  <SearchFilter/>*/}
     {/*  <HooksPractise />*/}
     {/* <Link to={"/airline"}>Airline</Link><br></br>
     <Link to={"/airlines"}>Airlines</Link> */}
