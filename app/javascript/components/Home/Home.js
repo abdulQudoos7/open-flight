@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
+import Beer from "../beers/Beer";
+import Api from "../beers/Api";
 
 const Home = () => {
-  return ("this is home component")
-  // <tr>
-  //   beer && beer.map((number) =>
-  //   <>
-  //   <td key={number.id}>{number.name}</td>
-  //   {/* <li {...number.name}></li> */}
-  //   </>
-  //   )}
-  // </tr>
+    return (
+        <>
+            <h1>"this is home component"</h1>
+            <Beer></Beer>
+            {/* <Api></Api> */}
+        </>
+    )
 }
 
 export default Home;

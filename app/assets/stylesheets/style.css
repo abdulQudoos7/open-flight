@@ -1,0 +1,7 @@
+table,tr, th, td {
+  border: 2px dotted black;
+}
+img{
+  width: 50px;
+  height: 115px;
+}

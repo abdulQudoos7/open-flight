@@ -13,17 +13,17 @@ import SearchFilter from "./beers/SearchFilter";
 const App = () => {
   return (
     <>
-    {/* <Home/> */}
+      <Home/>
     {/* <Date/> */}
-      <Beer/>
+    {/*  <Beer/>*/}
     {/*  <SearchFilter/>*/}
     {/*  <HooksPractise />*/}
     {/* <Link to={"/airline"}>Airline</Link><br></br>
     <Link to={"/airlines"}>Airlines</Link> */}
 
     <Routes>
-      <Route path="/" element={<Airlines />} />
-      <Route path="/airline/:slug" element={<Airline />}/>
+      {/*<Route path="/" element={<Airlines />} />*/}
+      {/*<Route path="/airline/:slug" element={<Airline />}/>*/}
     </Routes>
     </>
   )
